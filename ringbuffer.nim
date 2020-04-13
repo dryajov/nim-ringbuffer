@@ -4,7 +4,7 @@ type
     head: int
     tail: int
     size: int
-    len: int
+    len*: int
 
 const DefaultSize = 1024
 
