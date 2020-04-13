@@ -1,10 +1,7 @@
 type
   RingBuffer*[T: byte | char] = object
     buff: seq[T]
-    head: int
-    tail: int
-    size: int
-    len*: int
+    head, tail, size, len: int
 
 const DefaultSize = 1024
 
