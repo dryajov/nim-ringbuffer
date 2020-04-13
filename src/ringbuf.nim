@@ -10,7 +10,7 @@ const DefaultSize = 1024
 
 ## A bare bones ring buffer suited for byte oriented data.
 ## The buffer uses `shallowCopy` when appending and reading
-## data to avoid overcome Nim's copy semantics.
+## data to overcome Nim's copy semantics.
 ##
 ## This is a FIFO data structure, data is always appended to the end
 ## and read from the front.
