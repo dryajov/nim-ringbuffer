@@ -95,6 +95,27 @@ proc read*[T](b: var RingBuffer[T],
     b.len.dec
     result.inc
 
+proc read*[T](b: var RingBuffer[T], size: int = -1): seq[T] =
+  ## Read up to ``size`` bytes/chars from the front of the buffer.
+  ##
+  ## Returns a `seq` with the read bytes/chars.
+  ##
+  ## Note that ``size`` is the maximum amount of bytes/chars to read,
+  ## if not enough data is available read will return what it can.
+  ## If ``size`` is not provided, the entire contents of the buffer
+  ## will be returned.
+  ##
+  ## .. code-block:: nim
+  ## # read 5 chars from the buffer
+  ## assert(buff.read() == @[...])
+  ##
+  var isize = size
+  if size < 0:
+    isize = b.len
+
+  result = newSeq[T](isize)
+  discard b.read(result, isize)
+
 proc reset*[T](b: var RingBuffer[T]) =
   ## Reset the internal state of the buffer. The
   ## internal buffer itself will not be cleared,
@@ -162,6 +183,16 @@ when isMainModule:
     assert(buff.len == 0, "len should be 0")
     assert(buff.head == 9, "head should be 9")
     assert(buff.tail == 9, "tail should be 9")
+
+    buff.append(@['a', 'b', 'c', 'd', 'e'])
+    assert(buff.len == 5, "len should be 5")
+    assert(buff.head == 9, "head should be 7")
+    assert(buff.tail == 4, "tail should be 9")
+
+    assert(buff.read(5) == @['a', 'b', 'c', 'd', 'e'])
+    assert(buff.len == 0, "len should be 0")
+    assert(buff.head == 4, "head should be 9")
+    assert(buff.tail == 4, "tail should be 9")
 
 block Errors:
   var buff = RingBuffer[char].init(5)

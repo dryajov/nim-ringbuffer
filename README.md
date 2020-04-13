@@ -42,13 +42,25 @@ Returns an int indicating the amount of bytes/chars read.
 Note that ``size`` is the maximum amount of bytes/chars to read, if not enough data is available read will return what it can. If ``size`` is not provided, then the ``len`` field of the ``data`` argument will be used instead.
 
 ```nim
-# read 5 chars from the buffer
-var data = newSeq[char](10)
-assert(buff.read(data, 5) == 5)
+  # read 5 chars from the buffer
+  var data = newSeq[char](10)
+  assert(buff.read(data, 5) == 5)
 ```
 
-### `reset*[T](b: var RingBuffer[T])`:
+### `proc read*[T](b: var RingBuffer[T], size: int = -1): seq[T]`:
 
+Read up to ``size`` bytes/chars from the front of the buffer.
+
+Returns a `seq` with the read bytes/chars.
+
+Note that ``size`` is the maximum amount of bytes/chars to read, if not enough data is available read will return what it can. If ``size`` is not provided, the entire contents of the buffer will be returned.
+
+```nim
+  # read 5 chars from the buffer
+  assert(buff.read() == @[...])
+
+  ### `reset*[T](b: var RingBuffer[T])`:
+```
 Reset the internal state of the buffer. The internal buffer
 itself will not be cleared, but all internal pointers will be
 which allows reusing the buffer as if new.
