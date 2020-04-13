@@ -11,7 +11,7 @@ From wikipedia:
 
 ## API:
 
-`init*[T](b: type[RingBuffer[T]], size = DefaultSize)`:
+### `init*[T](b: type[RingBuffer[T]], size = DefaultSize)`:
 
 Create and initialize the ring buffer. Takes an optional maximum ``size``
 parameter, otherwise ``size`` will default to ``DefaultSize`` which is set to 1024.
@@ -25,7 +25,7 @@ parameter, otherwise ``size`` will default to ``DefaultSize`` which is set to 10
   echo data # prints @['a', 'b', 'c', 'd', 'e']
 ```
 
-`append*[T](b: var RingBuf[T], data: openarray[T])`:
+### `append*[T](b: var RingBuf[T], data: openarray[T])`:
 
 Append data to the end of the buffer. ``data`` will be ``shallowCopy``ed into the buffer to overcome Nim's copy semantics for ``seq``.
 
@@ -33,7 +33,7 @@ Append data to the end of the buffer. ``data`` will be ``shallowCopy``ed into th
     buff.append(@['a', 'b', 'b', 'c', 'd'])
 ```
 
-`read*[T](b: var RingBuffer[T], data: var openArray[T], size: int = -1): int`:
+### `read*[T](b: var RingBuffer[T], data: var openArray[T], size: int = -1): int`:
 
 Read up to ``size`` bytes/chars from the front of the buffer into the ``data`` argument.
 
@@ -47,13 +47,13 @@ var data = newSeq[char](10)
 assert(buff.read(data, 5) == 5)
 ```
 
-`reset*[T](b: var RingBuffer[T])`:
+### `reset*[T](b: var RingBuffer[T])`:
 
 Reset the internal state of the buffer. The internal buffer
 itself will not be cleared, but all internal pointers will be
 which allows reusing the buffer as if new.
 
-`clear*[T](b: var RingBuffer[T])`:
+### `clear*[T](b: var RingBuffer[T])`:
 
 Reset and clear the buffer.
 
