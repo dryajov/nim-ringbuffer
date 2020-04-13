@@ -230,4 +230,4 @@ block Cleanup:
   buff.clear()
   assert(buff.buff.len == 0, "buff.buff.len should be 0")
 
-echo "All passed!"
+  echo "All passed!"
