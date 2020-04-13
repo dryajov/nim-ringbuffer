@@ -194,40 +194,40 @@ when isMainModule:
     assert(buff.head == 4, "head should be 9")
     assert(buff.tail == 4, "tail should be 9")
 
-block Errors:
-  var buff = RingBuffer[char].init(5)
+  block Errors:
+    var buff = RingBuffer[char].init(5)
 
-  try:
-    buff.append(@['a', 'b', 'c', 'd', 'e', 'g'])
-    assert(false, "should not allow adding pas buffer size")
-  except CatchableError as exc:
-    assert(true)
+    try:
+      buff.append(@['a', 'b', 'c', 'd', 'e', 'g'])
+      assert(false, "should not allow adding pas buffer size")
+    except CatchableError as exc:
+      assert(true)
 
-  try:
-    buff.append(@['a', 'b', 'c', 'd', 'e', 'g'])
-    var data: seq[char]
-    discard buff.read(data)
-    assert(false, "should not allow passing empty container")
-  except CatchableError as exc:
-    assert(true)
+    try:
+      buff.append(@['a', 'b', 'c', 'd', 'e', 'g'])
+      var data: seq[char]
+      discard buff.read(data)
+      assert(false, "should not allow passing empty container")
+    except CatchableError as exc:
+      assert(true)
 
-  try:
-    buff.append(@['a', 'b', 'c', 'd', 'e', 'g'])
-    var data = newSeq[char](2)
-    discard buff.read(data, 5)
-    assert(false, "should not allow passing size greater than container")
-  except CatchableError as exc:
-    assert(true)
+    try:
+      buff.append(@['a', 'b', 'c', 'd', 'e', 'g'])
+      var data = newSeq[char](2)
+      discard buff.read(data, 5)
+      assert(false, "should not allow passing size greater than container")
+    except CatchableError as exc:
+      assert(true)
 
-block Cleanup:
-  var buff = RingBuffer[char].init(5)
+  block Cleanup:
+    var buff = RingBuffer[char].init(5)
 
-  buff.reset()
-  assert(buff.len == 0, "buff.len should be 0")
-  assert(buff.head == 0, "buff.head should be 0")
-  assert(buff.tail == 0, "buff.tail should be 0")
+    buff.reset()
+    assert(buff.len == 0, "buff.len should be 0")
+    assert(buff.head == 0, "buff.head should be 0")
+    assert(buff.tail == 0, "buff.tail should be 0")
 
-  buff.clear()
-  assert(buff.buff.len == 0, "buff.buff.len should be 0")
+    buff.clear()
+    assert(buff.buff.len == 0, "buff.buff.len should be 0")
 
   echo "All passed!"
